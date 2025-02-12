@@ -46,7 +46,10 @@ Easy on and off ramps
 Counterfraud and user safety and protection
 
 Node trust management and coordination 
+
+Safe an secure (de-)Fragmentation / (de-)composition of smart contracts and data storage.
 ```
+![data-IPFS](data-IPFS.png)
 
 <b>Note on Byzantine Fault Tolerant Systems</b>
 
