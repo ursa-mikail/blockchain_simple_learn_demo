@@ -62,6 +62,7 @@ On every action, e.g. when you add ownership, what is the flow to increase the s
 Safe an secure (de-)Fragmentation / (de-)composition of smart contracts and data storage.
 ```
 ![data-IPFS](data-IPFS.png)
+![innovation-requests-00](innovation-requests-00.png)
 
 <b>Note on Byzantine Fault Tolerant Systems</b>
 
