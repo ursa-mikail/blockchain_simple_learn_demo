@@ -41,3 +41,14 @@ Easy on and off ramps
 
 Counterfraud and user safety and protection
 ```
+
+<b>Note on Byzantine Fault Tolerant Systems</b>
+
+```
+Start (initiate) → Inform all (request) → group synch on info (request) → inform all (response:decision) → centralized collected co-decision 
+```
+![Byzantine-Fault-Tolerant-Systems](Byzantine-Fault-Tolerant-Systems.png)
+
+
+
+
