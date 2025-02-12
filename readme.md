@@ -5,5 +5,5 @@
 The miner will broadcast the answer. To get a reward, s/he appends a term before s/he starts mining. This also mints new currency amount.  
 * Miner not demonstrated in this learning segment. 
 
-#[blockchain-describe](!blockchain-describe.png)
+![blockchain-describe](blockchain-describe.png)
 
