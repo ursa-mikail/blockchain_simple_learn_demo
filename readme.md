@@ -54,7 +54,9 @@ e.g. --redelegate/transfer_ownership, --transfer_funds, --add_ownership, etc.
 
 Trust and entrust membership management.
 """
---approve or --deny or --revoke must come with clear option just as before, i.e.  --redelegate/transfer_ownership, --transfer_funds, --add_ownership, etc. 
+e.g. --approve or --deny or --revoke must come with clear option just as before, i.e.  --redelegate/transfer_ownership, --transfer_funds, --add_ownership, etc. 
+
+On every action, e.g. when you add ownership, what is the flow to increase the shares? regenerate (MPC or Multi-sig)? Release back-up shares (escrowed)? 
 """
 
 Safe an secure (de-)Fragmentation / (de-)composition of smart contracts and data storage.
