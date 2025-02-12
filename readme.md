@@ -69,9 +69,6 @@ Safe an secure (de-)Fragmentation / (de-)composition of smart contracts and data
 ```
 Start (initiate) → Inform all (request) → group synch on info (request) → inform all (response:decision) → centralized collected co-decision 
 
-PBFT: 
-Request (node 0) - announce (node 0) - synch (ensure announcement) - commit - finalize (reply)
-
 Byzantine fault tolerance (a.k.a. BFT) is a system that operates normally within a byzantine failure model. However, even BFT does not operate when there exist numerous faulty nodes. The amount of faulty nodes that can be tolerated must be mentioned. For example, if N = 5f, even if ⅕ of the nodes suffer from byzantine failure, the entire system operates properly. Likewise, if N=3f+1, ⅓ of the nodes could suffer from byzantine failure and the entire system will still operate with no issues. 
 * assume N only fulfills 1 role or function or service for the blockchain
 * for a functional role, s/he must be backed by 3 other
@@ -80,9 +77,21 @@ Byzantine fault tolerance (a.k.a. BFT) is a system that operates normally within
 -not sending a message at all. 
 -node in byzantine failure maliciously sends different messages
 
-for N nodes to function properly while having f nodes suffering from byzantine failure, a consensus has to be reached with N — f messages, i.e. N — f nodes are required for quorum. 
+For N nodes to function properly while having f nodes suffering from byzantine failure, a consensus has to be reached with N — f messages, i.e. N — f nodes are required for quorum. 
 say that among the N — f nodes that achieved quorum, f were sent by byzantine failure. Even in this case, the system has to operate normally, and thus (N — f) — f messages must > f messages (sent by nodes suffering from byzantine failure).
 to resolve the 2 problems above, (N — f) — f > f. N > 3f, which means when there are f nodes that has a byzantine failure, there has > 3 f nodes in order for the system to be byzantine fault tolerant. The smallest N value is 3f + 1. Thus, in a system that is made up of 3f + 1 nodes, the greatest amount of faulty nodes that can exist is f. 
+
+PBFT: 
+Request (node 0) - announce (node 0) - synch (ensure announcement) - commit - finalize (reply)
+
+If the leader is not reachable because of a network partition, there are 2 possibilities:
+- keep availability, allowing the clients to read from replicas potentially not in synch
+- maintain consistency, letting fail all the read operations that can't reach the leader
+
+Even in the case of no network partitions, there is a further consideration. Before executing a write operation, the leader must check its role with a majority of replicas. This is because it might not be the leader anymore by the time it executes a write. Since the system is consistent only if the machine performing a write operation is the leader, there are 2 options:
+- keep consistency, allowing the leader to check their role
+- keep low latency, avoiding this time-consuming check
+
 
 ```
 ![Byzantine-Fault-Tolerant-Systems](Byzantine-Fault-Tolerant-Systems.png)
