@@ -13,7 +13,11 @@ Visa: avg: 1700 tps, >24000 tps; bitcoin block size: 2400 transaction limit.
 Mempool (transaction pool): list of outstanding transaction which have been broadcast but not in blockchain yet.
 With more than 51%, attacker has higher chance to win the game, suppress mempool transaction selection and create double spending fraud and change rules of consensus.
 
-BTC consensus: ledger append-only, decentralism, validation via miners and PoW  
+BTC consensus: ledger append-only, decentralism, validation via miners and PoW 
+
+Nodes can broadcast their presence on a predefined port and in a predefined message format. Other nodes can be listening on this port, so that they "catch" the message from a new node (broadcasting their presence). To connect to a known peer, nodes establish a TCP connection, usually to port 8333 (the port generally known as the one used by bitcoin), or an alternative port if one is provided. Any individual can become a node and start participating in the network. There is no oversight over who can join, or how many nodes can you create. All your transactions are recorded on the main-net and visible to everyone. In ETH  blockchain, there are so called "bootnodes". Their only task is to welcome new nodes and let them meet the other nodes on the network. These bootnodes have a static IP address and a list of all nodes running in the network. When you start a new node it can ask a bootnode for all the nodes in the network, to become a new member of the blockchain network.
+
+Some clients also have a predefined list of trusted nodes that are usually maintained by the network core development team or some other trusted groups, so that the client doesn't have to wait for other nodes to broadcast their presence and can communicate with these trusted nodes right away.
 ```
 
 ![blockchain-describe](blockchain-describe.png)
@@ -40,6 +44,8 @@ Non-exclusive
 Easy on and off ramps
 
 Counterfraud and user safety and protection
+
+Node trust management and coordination 
 ```
 
 <b>Note on Byzantine Fault Tolerant Systems</b>
