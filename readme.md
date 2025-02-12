@@ -47,6 +47,16 @@ Counterfraud and user safety and protection
 
 Node trust management and coordination 
 
+Simple and clear actions like transaction should spell transaction purpose clearly in action (not leaving interpretation based on the inference of the params). Instead of non-intuitive option modes like is "23", “params "0 16"?”, “... add-cancel ... '0'” (what is the param "0" at the end?), etc, make it explicit instead of creating redundant look-up.
+e.g. --redelegate/transfer_ownership, --transfer_funds, --add_ownership, etc. 
+
+**Reason** : Ambiguity and confusion can be a cause of security risks. Be explicit and conserve energy focus for humans. 
+
+Trust and entrust membership management.
+"""
+--approve or --deny or --revoke must come with clear option just as before, i.e.  --redelegate/transfer_ownership, --transfer_funds, --add_ownership, etc. 
+"""
+
 Safe an secure (de-)Fragmentation / (de-)composition of smart contracts and data storage.
 ```
 ![data-IPFS](data-IPFS.png)
