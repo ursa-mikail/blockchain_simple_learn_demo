@@ -144,3 +144,90 @@ RIPEMD160: 8b532e9e7c8ce82b4e7e0a218d5328e1a1513b98
 address-encode: 1DhgaFzUHYXbuDYoV7oq6MGQM8J1tvxD4f
 ✓ Address matches expected value!
 """    
+
+#!pip install ecdsa
+#!pip install bitcoin
+import random
+import ecdsa
+from bitcoin import *
+
+# secp256k1, http://www.oid-info.com/get/1.3.132.0.10
+_p = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F
+_r = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
+_b = 0x0000000000000000000000000000000000000000000000000000000000000007
+_a = 0x0000000000000000000000000000000000000000000000000000000000000000
+_Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
+_Gy = 0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8
+curve_secp256k1 = ecdsa.ellipticcurve.CurveFp(_p, _a, _b)
+generator_secp256k1 = ecdsa.ellipticcurve.Point(curve_secp256k1, _Gx, _Gy, _r)
+oid_secp256k1 = (1, 3, 132, 0, 10)
+SECP256k1 = ecdsa.curves.Curve("SECP256k1", curve_secp256k1, generator_secp256k1, oid_secp256k1)
+ec_order = _r
+
+curve = curve_secp256k1
+generator = generator_secp256k1
+
+a = random.randrange(2**256)
+b = random.randrange(2**256)
+
+A =fast_multiply(G, a)
+B =fast_multiply(G, b)
+
+print("Bob Private Key (a)",a)
+print("Hex:", hex(a))
+print("Base58:", encode_privkey(a, 'wif'))
+
+print("Bob Public Key (A)",A)
+print("Hex:", (hex(A[0]), hex(A[1])))
+print("Base58:", pubkey_to_address(A))
+
+print("\nTrent Private Key (b)",b)
+print("Hex:", hex(b))
+print("Base58:", encode_privkey(b, 'wif'))
+
+print("Trent Public Key (B)",B)
+print("Hex:", (hex(B[0]), hex(B[1])))
+print("Base58:", pubkey_to_address(B))
+
+# Trent shows public key (Hash(A+B))
+address = pubkey_to_address(fast_add(A,B))
+print("\nTrent shows public key (Hash(A+B)):",address)
+
+# Bob calculates public key (Hash(Pub(a+b)))
+a_b = a+b % _p
+A_B = fast_multiply(G, a_b)
+
+address = pubkey_to_address(A_B)
+print("Bob calculates public key (Hash(Pub(a+b))):",address)
+print("\nBob calculates private key (a+b):",a_b)
+
+# Print Bob's calculated private key in hex and base58
+print("\nBob calculates private key (a+b):")
+print("Hex:", hex(a_b))
+print("Base58:", encode_privkey(a_b, 'wif'))
+
+"""
+Bob Private Key (a) 4618366503005306947750017302105789987649249605007412904395292010611350502082
+Hex: 0xa35e71e6408dff4cd0bcc4657c8a883f6188d6e059ec6e382a22a84b87cfac2
+Base58: 5HtnPx6bbfChMSE1M4P6vtP3mtJUmZVYdvA7j4x4BfftEB6LyaF
+Bob Public Key (A) (110714754834929226731100007265126290775095944755187666021035311632023269207049, 109359586098797289474665637974302295181499090549113065028219715071262109986004)
+Hex: ('0xf4c654a00e41f86a235a9ed3e8c979b3bcb6e6ae461886024c187954c764ec09', '0xf1c7550df16196707424ca08720ab4fec52354374f521c197c504ba24c33ecd4')
+Base58: 1KsnWxoztUp4TV3TzSUKdXED6dfoHgXY9h
+
+Trent Private Key (b) 38233553778852761191427168027046853293596990820924928633598944971260345727926
+Hex: 0x54876cb0643f38051968c14503803a5b80d55549f0d6f7c557574e4545143bb6
+Base58: 5JTWm7g16hwcT7BJJneWJ5Pg45kUVrsvUSnhPoFM5KtX7ZTavqK
+Trent Public Key (B) (7625087641538558977782704299382291059755306606746477997469531425455796092994, 54301728302265956704413774116631434427841779383221983844390987983206848269978)
+Hex: ('0x10dba58bcb95cf5446e060db83f5a35ab5295bf7b507cdd39f78fdc929a78042', '0x780db0661e023487abf16ee513f00a0d17e3f291da0e9d9b53ae908631160e9a')
+Base58: 1J1LHv1t7a8ZFKJnoUt1gjFjZieFX3BWmS
+
+Trent shows public key (Hash(A+B)): 1FDL731BeJ8WNa3iv3zwBbLu7NiVJU4RH3
+Bob calculates public key (Hash(Pub(a+b))): 1FDL731BeJ8WNa3iv3zwBbLu7NiVJU4RH3
+
+Bob calculates private key (a+b): 42851920281858068139177185329152643281246240425932341537994236981871696230008
+
+Bob calculates private key (a+b):
+Hex: 0x5ebd53cec84817f9e6748d8b5b48e2df76ede2b7f675bea8d9f978c9fd913678
+Base58: 5JY1aPKWcuaKYY22ceai8v2bcNE34HWPPYt2th9f27hmBBEoBhq
+
+"""
